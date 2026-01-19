@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jobster - Landing Page</title>
+  <meta name="description" content="Jobster, recherche d'emploie, job board" />
+  <meta name="author" content="Jobster" />
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"
+  />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <link rel="stylesheet" href="styles/style.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon" />
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="img/favicon/apple-touch-icon.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="512x512"
+    href="img/favicon/android-chrome-512x512.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="192x192"
+    href="img/favicon/android-chrome-192x192.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="img/favicon/favicon-32x32.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="img/favicon/favicon-16x16.png"
+  />
+</head>
+<body>
+<section class="section-landing flex-col space-b gap-2">
+      <header>
+        <nav class="nav w-full padding-1 radius-1" >
+            <div class="nav-logo flex w-full space-b">
+              <img class="h-full" src="img/logo.png" alt="Logo Jobster">
+              <button class="hamburger-btn" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+            <ul>
+              <li><a href="login">Se connecter</a></li>
+              <li><a href="register">S'inscrire</a></li>
+              <li style="display: none;"><a href="jobs">Accéder au site</a></li>
+            </ul>
+            <div class="nav-logout">
+              <button id="logoutBtn">Déconnexion</button>
+            </div>
+        </nav>
+      </header>
+    <div class="container-landing w-full flex-col gap-2">
+      <h1>Trouvez le job qui vous ressemble, sans perdre de temps.</h1>
+      <h2>Postulez, et décrochez l'emploi qui correspond à vos ambitions.</h2>
+      <div style="margin-top: 2rem;">
+        <a href="/jobs" class="btn-primary" style="display: inline-block; padding: 1rem 2rem; background-color: #007bff; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: bold;">
+          Découvrir les offres
+        </a>
+      </div>
+      <img src="img/bg/desktop-hero.png" alt="Mockup de l'application Jobster" style="display: none;">
+      <img src="img/bg/mobile-hero.png" alt="Mockup de l'application Jobster" >
+    </div>
+  </section>
+  <svg id="texture" style="display: none;">
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="4" stitchTiles="stitch"></feTurbulence>
+      <feColorMatrix type="saturate" values="0"></feColorMatrix>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noise)"></rect>
+  </svg>
+    <script src="scripts/common-utils.js"></script>
+    <script>
+      initHamburgerMenu();
+    </script>
+</body>
+</html>

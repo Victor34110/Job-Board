@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Erreur 404</title>
+    <meta
+      name="description"
+      content="Jobster, recherche d'emploie, job board"
+    />
+    <meta name="author" content="Jobster" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+    <link rel="stylesheet" href="styles/style.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="img/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="img/favicon/android-chrome-512x512.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="img/favicon/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="img/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="img/favicon/favicon-16x16.png"
+    />
+  </head>
+  <body>
+    <section class="error404 flex-col ">
+
+      <div class="flex">
+        <img
+          src="img/icon/black.svg"
+          alt="Logo Jobster"
+          style="transform: scaleX(-1)"
+        />
+        <img src="img/icon/black.svg" alt="Logo Jobster"  />
+      </div>
+
+      <h1>Error 404</h1>
+      <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
+      <a href="/" class="btn">Retour à l'accueil</a>
+    </section>
+
+    <svg id="texture" style="display: none">
+      <filter id="noise">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency=".8"
+          numOctaves="4"
+          stitchTiles="stitch"
+        ></feTurbulence>
+        <feColorMatrix type="saturate" values="0"></feColorMatrix>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#noise)"></rect>
+    </svg>
+  </body>
+  <script>
+  document.body.addEventListener("click", function (event) {
+
+    // Création de l'image du homard
+    const homard = document.createElement("img");
+    homard.src = "img/icon/black.svg";
+    homard.alt = "Homard";
+    homard.classList.add("homard");
+
+    // Taille aléatoire
+    const randomSize = Math.floor(Math.random() * 50) + 100;
+    homard.style.width = `${randomSize}px`;
+
+
+    // Position aléatoire sur la page
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 100);
+
+    homard.style.left = `${x}px`;
+    homard.style.top = `${y}px`;
+
+  
+    document.body.appendChild(homard);
+
+    // Vitesse aléatoire
+    let dx = (Math.random() - 0.5) * 4;
+    let dy = (Math.random() - 0.5) * 4;
+
+    // Animation du rebond
+    function move() {
+      x += dx;
+      y += dy;
+
+      // Rebond sur les bords
+      if (x <= 0 || x >= window.innerWidth - 100) dx = -dx;
+      if (y <= 0 || y >= window.innerHeight - 100) dy = -dy;
+
+      homard.style.left = `${x}px`;
+      homard.style.top = `${y}px`;
+
+      requestAnimationFrame(move);
+    }
+
+    move();
+  });
+</script>
+<style>
+      body {
+        background-color: rgb(235, 139, 104);
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;   /* centre verticalement */
+        justify-content: center; /* centre horizontalement */
+      }
+
+      .error404{
+        user-select: none;
+      }
+
+      
+      h1 {
+        font-size: 5rem;
+        margin: 0;
+      }
+      p {
+        font-size: 1.5rem;
+        margin: 10px 0;
+      }
+      .logo {
+        width: 100px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+      .btn {
+        background-color: #fff;
+        color: #ff7f50;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+      .btn:hover {
+        background-color: #ff6347;
+      }
+
+.homard { /* homard*/
+  position: absolute;
+  width: 80px;
+  height: auto;
+  transition: transform 0.3s ease;
+  pointer-events: none; 
+  animation: wiggle 2s infinite ease-in-out;
+}
+
+@keyframes wiggle { /* homards qui tournent*/
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg); }
+
+}
+
+
+
+
+
+
+/*================= RESPONSIVE =================*/
+
+/* Téléphones (320px - 425px) */
+@media (min-width: 320px) {
+  
+ 
+      .error404{
+        user-select: none;
+       
+      }
+
+      .error404 img{
+
+        width: 150px;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+        
+      }
+      p {
+        font-size: 20px;
+        margin: 5px 0;
+        text-align: center; 
+
+      }
+      .logo {
+        width: 30px; /* logos plus petits */
+        margin-bottom: 10px;
+      }
+      .btn {
+        font-size: 1rem;
+        padding: 8px 15px;
+      }
+      
+
+ }
+/* Téléphones (575px - 768px) */
+@media (min-width: 575px) {
+
+      .error404{
+        user-select: none;
+      }
+
+      .error404 img{
+        width: 180px;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      p {
+        font-size: 1.5rem;
+        margin: 10px 0;
+        text-align: center; 
+      }
+
+      .logo {
+        width: 50px; /* logos plus petits */
+        margin-bottom: 10px;
+      }
+     
+      .btn {
+        font-size: 1.5rem;
+        padding: 8px 15px;
+      }
+}
+/* Tablettes (768px - 1024px) */
+@media (min-width: 768px) {
+
+  .error404{
+        user-select: none;
+      }
+      .error404 img{
+        width: 180px;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 3rem; 
+      }
+      p {
+        font-size: 1.5rem;
+        margin: 15px 0;
+      }
+      .logo {
+        width: 60px; /* logos plus petits */
+        margin-bottom: 10px;
+      }
+      .btn {
+        font-size: 1.5rem;
+        padding: 8px 15px;
+      }
+ 
+}
+
+
+/* Ordinateur (1440px) */
+@media (min-width: 1440px) {
+  .error404{
+        user-select: none;
+      }
+      .error404 img{
+        width: 200px;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        
+      }
+      p {
+        font-size: 2rem;
+        margin: 15px 0;
+      }
+    
+ }
+  </style>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jobster - Inscription</title>
+  <meta name="description" content="Jobster, inscription pour recherche d'emploi" />
+  <meta name="author" content="Jobster" />
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"
+  />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+  <link rel="stylesheet" href="styles/style.css" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon" />
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="img/favicon/apple-touch-icon.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="512x512"
+    href="img/favicon/android-chrome-512x512.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="192x192"
+    href="img/favicon/android-chrome-192x192.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="img/favicon/favicon-32x32.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="img/favicon/favicon-16x16.png"
+  />
+</head>
+<body id="auth">
+  <section class="section-auth">
+    <div class="bg-r" aria-hidden="true"></div>
+    <div class="container-auth flex-col gap-2">
+      <div class="logo flex-col">
+        <img src="img/logo.png" alt="Logo Jobster">
+        <h1>Inscription</h1>
+      </div>
+        <form class="flex-col">
+          <fieldset>
+            <label for="firstname">Prénom</label>
+            <input class="padding-1 radius-1" type="text" name="firstname" id="firstname" placeholder="Prénom" aria-describedby="firstname-error" required>
+            <span id="firstname-error" class="error-message" aria-live="polite"></span>
+          </fieldset>
+          <fieldset>
+            <label for="lastname">Nom</label>
+            <input class="padding-1 radius-1" type="text" name="lastname" id="lastname" placeholder="Nom" aria-describedby="lastname-error" required>
+            <span id="lastname-error" class="error-message" aria-live="polite"></span>
+          </fieldset>
+          <fieldset>
+            <label for="email">E-mail</label>
+            <input class="padding-1 radius-1" type="email" name="email" id="email" placeholder="Entrez votre e-mail" aria-describedby="email-error" required>
+            <span id="email-error" class="error-message" aria-live="polite"></span>
+          </fieldset>
+          <fieldset>
+            <label for="password">Mot de passe</label>
+            <input class="padding-1 radius-1" type="password" name="password" id="password" placeholder="Entrez votre mot de passe" aria-describedby="password-error" required>
+            <span id="password-error" class="error-message" aria-live="polite"></span>
+          </fieldset>
+
+          <button name="submit" class="radius-1 padding-1" type="submit">S'inscrire</button>
+
+          <div class="flex w-full space-b">
+            <p>Déjà un compte ?</p>
+            <a href="login">Connectez-vous</a>
+          </div>
+        </form>
+    </div>
+  </section>
+  <svg id="texture" style="display: none;">
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="4" stitchTiles="stitch"></feTurbulence>
+      <feColorMatrix type="saturate" values="0"></feColorMatrix>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noise)"></rect>
+  </svg>
+  
+  <!-- Scripts d'authentification -->
+  <script src="scripts/auth-utils.js"></script>
+  <script src="scripts/common-utils.js"></script>
+  <script src="scripts/register.js"></script>
+</body>
+</html>
