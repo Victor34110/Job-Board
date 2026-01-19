@@ -1,7 +1,0 @@
-
-> t-web-501-mpl_7@1.0.0 start
-> node app.js
-
-[dotenv@17.2.3] injecting env (5) from .env -- tip: ⚙️  enable debug logging with { debug: true }
-Serveur démarré sur http://localhost:3000
-Connecté à PostgreSQL - Heure : 2026-01-14T16:29:17.821Z
