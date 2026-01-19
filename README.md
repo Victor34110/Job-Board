@@ -45,9 +45,8 @@ Nous avons mis l’accent sur :
 - Node.js
 - Express.js
 - PostgreSQL
-- bcryptjs
 - express-session
-- dotenv
+
 
 ### Frontend
 - HTML5 / CSS3
