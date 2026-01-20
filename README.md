@@ -1,7 +1,8 @@
 <p align="center">
-  <img src="img-readme/admin.png" width="250" />
-  <img src="img-readme/error404.png" width="250" />
-  <img src="img-readme/landing-page.png" width="250" />
+  <img src="public/img-readme/landing-page.png" width="262" />
+  <img src="public/img-readme/admin.png" width="240" />
+  <img src="public/img-readme/error404.png" width="252" />
+  
 </p>
 
 <p align="center">
