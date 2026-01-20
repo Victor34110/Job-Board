@@ -1114,3 +1114,143 @@ form div:last-child a {
   font-style: italic;
   font-size: 0.9rem;
 }
+/* ================= MODAL STYLES ================= */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--w);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  overflow: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--d-cp);
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: var(--d);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--d-cm);
+  padding: 0;
+}
+
+.close-btn:hover {
+  color: var(--d);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-body input,
+.modal-body textarea,
+.modal-body select {
+  padding: 0.75rem;
+  border: 1px solid var(--d-cp);
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.modal-body input:focus,
+.modal-body textarea:focus,
+.modal-body select:focus {
+  outline: none;
+  border-color: var(--bl);
+  box-shadow: 0 0 0 3px var(--bl-cp);
+}
+
+.modal-footer {
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  border-top: 1px solid var(--d-cp);
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--bl);
+  color: var(--w);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.btn-small:hover {
+  background: var(--bl-c);
+}
+
+.btn-danger {
+  background: var(--o);
+}
+
+.btn-danger:hover {
+  background: var(--o-c);
+}
+
+.btn-secondary {
+  background: var(--d-cm);
+  color: var(--w);
+}
+
+.btn-secondary:hover {
+  background: var(--d);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.admin-table thead {
+  background: var(--d-cp);
+}
+
+.admin-table th {
+  padding: 1rem;
+  text-align: left;
+  color: var(--d);
+  font-weight: 600;
+}
+
+.admin-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--d-cp);
+}
+
+.admin-table tbody tr:hover {
+  background: var(--bg);
+}

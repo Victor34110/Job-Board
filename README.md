@@ -110,14 +110,16 @@ Dans PostgreSQL :
 
 ```sql
 CREATE DATABASE jobster;
+CREATE USER jobster_user WITH PASSWORD 'motdepassefort';
+GRANT ALL PRIVILEGES ON DATABASE jobster TO jobster_user;
 ```
 
 ### 4) Configurer le fichier `.env`
 Créer un fichier **.env** à la racine :
 
 ```env
-DB_USER=postgres
-DB_PASSWORD=your_password
+DB_USER=jobster_user
+DB_PASSWORD=motdepassefort
 DB_HOST=localhost
 DB_NAME=jobster
 DB_PORT=5432
@@ -126,7 +128,17 @@ PORT=3000
 SESSION_SECRET=change_me
 ```
 
-### 5) Lancer le serveur
+### 5) Initialiser les tables et données
+Les tables sont créées automatiquement au premier lancement. Vous pouvez insérer des utilisateurs de test :
+
+```sql
+INSERT INTO users (first_name, last_name, email, password, role) VALUES
+('Admin', 'Jobster', 'admin@jobster.com', 'password123', 'admin'),
+('Jean', 'Dupont', 'jean.dupont@email.com', 'password123', 'user'),
+('Test', 'User', 'test@test.com', 'test1234', 'user');
+```
+
+### 6) Lancer le serveur
 ```bash
 npm start
 ```
@@ -137,14 +149,40 @@ npm start
 
 ## 👤 Inscription / Connexion
 
-- Inscription : `http://localhost:3000/register`
-- Connexion : `http://localhost:3000/login`
+### Comptes de test disponibles :
 
-✅ Vous avez 2 options : soit vous vous inscrivez via `http://localhost:3000/register`, soit vous pouvez utiliser le compte de test suivant :
+| Email | Mot de passe | Rôle |
+|-------|--------------|------|
+| `admin@jobster.com` | `password123` | **Admin** - Accès complet |
+| `jean.dupont@email.com` | `password123` | **User** - Utilisateur lambda |
+| `test@test.com` | `test1234` | **User** - Utilisateur lambda |
 
-- **admin@jobster.com / password123**
+Ou vous pouvez vous inscrire via : `http://localhost:3000/register`
+
+---
+
+## 🔑 Fonctionnalités par rôle
+
+### Utilisateur lambda
+- ✅ Consulter les offres et entreprises
+- ✅ Postuler à une offre
+- ✅ Suivre ses candidatures (statut : pending / accepted / rejected)
+- ✅ Gérer son profil
+
+### Admin
+- ✅ **Dashboard complet** avec onglets : Utilisateurs | Entreprises | Offres | Candidatures
+- ✅ **Créer** des entreprises, offres, utilisateurs
+- ✅ **Modifier** les éléments (en développement)
+- ✅ **Supprimer** des éléments
+- ✅ Voir toutes les candidatures
+- ✅ Gérer les rôles utilisateurs
+
+---
+
+## 🌐 Pages disponibles
 
 Une fois connecté, tu peux naviguer sur :
-- Offres : `/jobs`
-- Entreprises : `/companies`
-- Dashboard : `/dashboard`
+- **Accueil** : `/` 
+- **Offres d'emploi** : `/jobs`
+- **Entreprises** : `/companies`
+- **Dashboard** : `/dashboard` (espace utilisateur + admin)

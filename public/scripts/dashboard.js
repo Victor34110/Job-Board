@@ -162,17 +162,83 @@ function createSimpleTable(tableName, records) {
   return `
     <div class="table-container">
       <div class="table-header">
-        <h3>Gestion des ${getTableDisplayName(tableName)}s</h3>
-        <p class="table-info">Mode lecture seule</p>
+        <div>
+          <h3>Gestion des ${getTableDisplayName(tableName)}s</h3>
+          <button class="btn-primary" onclick="openCreateModal('${tableName}')">+ Ajouter</button>
+        </div>
       </div>
       <table class="admin-table">
         <thead>
           <tr>
             ${headers[tableName].map(h => `<th>${h}</th>`).join('')}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          ${rows}
+          ${records.map((record, idx) => {
+            let row = '';
+            switch(tableName) {
+              case 'users':
+                row = `
+                  <tr>
+                    <td>${record.id}</td>
+                    <td>${record.first_name}</td>
+                    <td>${record.last_name}</td>
+                    <td>${record.email}</td>
+                    <td>${record.role}</td>
+                    <td>
+                      <button class="btn-small" onclick="openEditModal('users', ${record.id})">Éditer</button>
+                      <button class="btn-small btn-danger" onclick="deleteRecord('users', ${record.id})">Supprimer</button>
+                    </td>
+                  </tr>
+                `;
+                break;
+              case 'companies':
+                row = `
+                  <tr>
+                    <td>${record.id}</td>
+                    <td>${record.name}</td>
+                    <td>${record.address || 'N/A'}</td>
+                    <td>${record.city || 'N/A'}</td>
+                    <td>
+                      <button class="btn-small" onclick="openEditModal('companies', ${record.id})">Éditer</button>
+                      <button class="btn-small btn-danger" onclick="deleteRecord('companies', ${record.id})">Supprimer</button>
+                    </td>
+                  </tr>
+                `;
+                break;
+              case 'jobs':
+                row = `
+                  <tr>
+                    <td>${record.id}</td>
+                    <td>${record.title}</td>
+                    <td>${record.company_name || 'N/A'}</td>
+                    <td>${record.location || 'N/A'}</td>
+                    <td>${record.salary ? record.salary + '€' : 'N/A'}</td>
+                    <td>
+                      <button class="btn-small" onclick="openEditModal('jobs', ${record.id})">Éditer</button>
+                      <button class="btn-small btn-danger" onclick="deleteRecord('jobs', ${record.id})">Supprimer</button>
+                    </td>
+                  </tr>
+                `;
+                break;
+              case 'applications':
+                row = `
+                  <tr>
+                    <td>${record.id}</td>
+                    <td>${record.first_name || 'N/A'} ${record.last_name || ''}</td>
+                    <td>${record.job_title || 'N/A'}</td>
+                    <td>${record.status}</td>
+                    <td>${formatDate(record.created_at)}</td>
+                    <td>
+                      <button class="btn-small btn-danger" onclick="deleteRecord('applications', ${record.id})">Supprimer</button>
+                    </td>
+                  </tr>
+                `;
+                break;
+            }
+            return row;
+          }).join('')}
         </tbody>
       </table>
     </div>
@@ -205,7 +271,146 @@ function formatDate(dateString) {
   });
 }
 
-// ================= DASHBOARD ADMIN SIMPLIFIÉ (READ ONLY) =================
+// ================= FONCTIONS CRUD =================
+
+async function deleteRecord(tableName, recordId) {
+  if (!confirm(`Êtes-vous sûr de vouloir supprimer cet élément ?`)) {
+    return;
+  }
+  
+  const endpoints = {
+    users: `/api/users/${recordId}`,
+    companies: `/api/companies/${recordId}`,
+    jobs: `/api/jobs/${recordId}`,
+    applications: `/api/applications/${recordId}`
+  };
+  
+  try {
+    const response = await fetch(endpoints[tableName], {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      showNotification('Élément supprimé avec succès', 'success');
+      loadTable(tableName);
+    } else {
+      showNotification(data.message || 'Erreur lors de la suppression', 'error');
+    }
+  } catch (error) {
+    showNotification('Erreur de connexion', 'error');
+    console.error(error);
+  }
+}
+
+function openCreateModal(tableName) {
+  let formHTML = '';
+  
+  switch(tableName) {
+    case 'companies':
+      formHTML = `
+        <input type="text" id="companyName" placeholder="Nom" required>
+        <input type="text" id="companyAddress" placeholder="Adresse" required>
+        <input type="text" id="companyCity" placeholder="Ville" required>
+      `;
+      break;
+    case 'jobs':
+      formHTML = `
+        <input type="text" id="jobTitle" placeholder="Titre" required>
+        <input type="number" id="jobCompanyId" placeholder="ID Entreprise" required>
+        <input type="text" id="jobLocation" placeholder="Lieu" required>
+        <input type="number" id="jobSalary" placeholder="Salaire" required>
+        <textarea id="jobDescription" placeholder="Description" required></textarea>
+      `;
+      break;
+    case 'users':
+      formHTML = `
+        <input type="text" id="firstName" placeholder="Prénom" required>
+        <input type="text" id="lastName" placeholder="Nom" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Mot de passe" required>
+        <select id="role" required>
+          <option value="user">Utilisateur</option>
+          <option value="admin">Admin</option>
+        </select>
+      `;
+      break;
+  }
+  
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Ajouter un nouvel élément</h2>
+        <button class="close-btn" onclick="this.closest('.modal').remove()">×</button>
+      </div>
+      <div class="modal-body">
+        ${formHTML}
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="createRecord('${tableName}', this.closest('.modal'))">Créer</button>
+        <button class="btn-secondary" onclick="this.closest('.modal').remove()">Annuler</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+}
+
+async function createRecord(tableName, modal) {
+  const data = {};
+  
+  switch(tableName) {
+    case 'companies':
+      data.name = document.getElementById('companyName').value;
+      data.address = document.getElementById('companyAddress').value;
+      data.city = document.getElementById('companyCity').value;
+      break;
+    case 'jobs':
+      data.title = document.getElementById('jobTitle').value;
+      data.company_id = document.getElementById('jobCompanyId').value;
+      data.location = document.getElementById('jobLocation').value;
+      data.salary = document.getElementById('jobSalary').value;
+      data.description = document.getElementById('jobDescription').value;
+      break;
+    case 'users':
+      data.first_name = document.getElementById('firstName').value;
+      data.last_name = document.getElementById('lastName').value;
+      data.email = document.getElementById('email').value;
+      data.password = document.getElementById('password').value;
+      data.role = document.getElementById('role').value;
+      break;
+  }
+  
+  try {
+    const response = await fetch(`/api/${tableName}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(data)
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      showNotification('Élément créé avec succès', 'success');
+      modal.remove();
+      loadTable(tableName);
+    } else {
+      showNotification(result.message || 'Erreur lors de la création', 'error');
+    }
+  } catch (error) {
+    showNotification('Erreur de connexion', 'error');
+    console.error(error);
+  }
+}
+
+function openEditModal(tableName, recordId) {
+  alert('Édition en cours de développement. Pour l\'instant, supprimez et recréez.');
+}
 
 function getTableDisplayName(tableName) {
   const names = {
