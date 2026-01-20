@@ -1,4 +1,10 @@
 <p align="center">
+  <img src="img-readme/admin.png" width="250" />
+  <img src="img-readme/error404.png" width="250" />
+  <img src="img-readme/landing-page.png" width="250" />
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Node.js-Backend-green?style=for-the-badge&logo=node.js&logoColor=white" />
   <img src="https://img.shields.io/badge/Express-API-black?style=for-the-badge&logo=express&logoColor=white" />
   <img src="https://img.shields.io/badge/PostgreSQL-Database-blue?style=for-the-badge&logo=postgresql&logoColor=white" />
