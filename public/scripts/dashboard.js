@@ -273,6 +273,27 @@ function formatDate(dateString) {
 
 // ================= FONCTIONS CRUD =================
 
+async function getCompanyOptions() {
+  try {
+    const response = await fetch('/api/companies', {
+      credentials: 'include'
+    });
+    const result = await response.json();
+
+    if (!result.success || !Array.isArray(result.data)) {
+      throw new Error(result.message || 'Impossible de charger les entreprises');
+    }
+
+    return result.data
+      .map(company => `<option value="${company.id}">${company.name} - ${company.city || 'Ville non spécifiée'}</option>`)
+      .join('');
+  } catch (error) {
+    console.error(error);
+    showNotification('Erreur lors du chargement des entreprises', 'error');
+    return '';
+  }
+}
+
 async function deleteRecord(tableName, recordId) {
   if (!confirm(`Êtes-vous sûr de vouloir supprimer cet élément ?`)) {
     return;
@@ -305,7 +326,7 @@ async function deleteRecord(tableName, recordId) {
   }
 }
 
-function openCreateModal(tableName) {
+async function openCreateModal(tableName) {
   let formHTML = '';
   
   switch(tableName) {
@@ -317,9 +338,13 @@ function openCreateModal(tableName) {
       `;
       break;
     case 'jobs':
+      const companyOptions = await getCompanyOptions();
       formHTML = `
         <input type="text" id="jobTitle" placeholder="Titre" required>
-        <input type="number" id="jobCompanyId" placeholder="ID Entreprise" required>
+        <select id="jobCompanyId" required>
+          <option value="" disabled selected>Entreprise</option>
+          ${companyOptions}
+        </select>
         <input type="text" id="jobLocation" placeholder="Lieu" required>
         <input type="number" id="jobSalary" placeholder="Salaire" required>
         <textarea id="jobDescription" placeholder="Description" required></textarea>

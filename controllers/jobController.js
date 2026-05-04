@@ -1,4 +1,5 @@
 const JobAdvertisement = require('../models/JobAdvertisement');
+const Company = require('../models/Company');
 
 const getAllJobs = async (req, res) => {
   try {
@@ -43,19 +44,46 @@ const createJob = async (req, res) => {
   try {
     const { title, description, company_id, location, salary } = req.body;
 
-    if (!title || !company_id) {
+    if (!title || !company_id || !location || !description) {
       return res.status(400).json({
         success: false,
-        message: 'Le titre et l\'entreprise sont obligatoires'
+        message: 'Le titre, l\'entreprise, le lieu et la description sont obligatoires'
+      });
+    }
+
+    const companyId = Number.parseInt(company_id, 10);
+    if (Number.isNaN(companyId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'L\'entreprise sélectionnée est invalide'
+      });
+    }
+
+    const company = await Company.findById(companyId);
+    if (!company) {
+      return res.status(400).json({
+        success: false,
+        message: 'L\'entreprise sélectionnée n\'existe pas'
+      });
+    }
+
+    const parsedSalary = salary === '' || salary === undefined || salary === null
+      ? null
+      : Number.parseFloat(salary);
+
+    if (parsedSalary !== null && Number.isNaN(parsedSalary)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Le salaire doit être un nombre valide'
       });
     }
 
     const newJob = await JobAdvertisement.create({
       title,
-      description: description || '',
-      company_id,
-      location: location || '',
-      salary: salary || null
+      description,
+      company_id: companyId,
+      location,
+      salary: parsedSalary
     });
 
     res.status(201).json({

@@ -1,5 +1,7 @@
 
 function createJobElement(job) {
+  const user = getUser();
+  const isAdmin = user && user.role === 'admin';
   const jobElement = document.createElement('div');
   jobElement.className = 'job-item flex-col radius-1 padding-1 gap-1';
   jobElement.setAttribute('data-job-id', job.id);
@@ -26,9 +28,15 @@ function createJobElement(job) {
       <button class="learn-more-btn" data-job-id="${job.id}">
         En savoir plus
       </button>
-      <button class="apply-btn" data-job-id="${job.id}">
-        Postuler
-      </button>
+      ${isAdmin ? `
+        <button class="apply-btn apply-btn-disabled" data-job-id="${job.id}" aria-disabled="true" data-tooltip="Les administrateurs ne peuvent pas postuler">
+          Postuler
+        </button>
+      ` : `
+        <button class="apply-btn" data-job-id="${job.id}">
+          Postuler
+        </button>
+      `}
     </div>
   `;
   
@@ -39,6 +47,11 @@ async function handleApply(jobId) {
   const user = getUser();
   if (!user) {
     window.location.href = '/login';
+    return;
+  }
+
+  if (user.role === 'admin') {
+    showNotification('Les administrateurs ne peuvent pas postuler aux offres', 'warning');
     return;
   }
   

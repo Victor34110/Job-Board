@@ -2,12 +2,13 @@ const pool = require('../config/db');
 
 class JobAdvertisement {
   static async create({ title, date_publication, description, salary, location, company_id }) {
+    const publicationDate = date_publication || new Date().toISOString().split('T')[0];
     const query = `
       INSERT INTO job_advertisements (title, date_publication, description, salary, location, company_id)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *
     `;
-    const values = [title, date_publication, description, salary, location, company_id];
+    const values = [title, publicationDate, description, salary, location, company_id];
     const { rows } = await pool.query(query, values);
     return rows[0];
   }

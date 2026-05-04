@@ -350,6 +350,37 @@ background-image: url(/img/bg/bg-dashboard.jpeg);
   opacity: 0.9;
 }
 
+.job-actions .apply-btn-disabled {
+  position: relative;
+  background-color: #9d9d9d;
+  color: #f7f7f7;
+  cursor: not-allowed;
+}
+
+.job-actions .apply-btn-disabled:hover {
+  background-color: #7f7f7f;
+  opacity: 1;
+}
+
+.job-actions .apply-btn-disabled:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: min(18rem, 90vw);
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.4rem;
+  background: var(--d);
+  color: var(--w);
+  font-size: 0.85rem;
+  line-height: 1.2;
+  text-align: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
 .job-description {
   background: var(--w-cm);
   padding: 1rem;
@@ -1227,6 +1258,65 @@ form div:last-child a {
 
 .btn-secondary:hover {
   background: var(--d);
+}
+
+.admin-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.admin-tabs .tab-button {
+  min-width: 7rem;
+  background: #f0f3ed;
+  color: var(--d);
+}
+
+.admin-tabs .tab-button:hover {
+  background: #dcebd6;
+  color: #245a31;
+}
+
+.admin-tabs .tab-button.active {
+  background: #2f7d46;
+  color: var(--w);
+  box-shadow: 0 0.35rem 0.8rem rgba(47, 125, 70, 0.22);
+}
+
+.table-header .btn-primary,
+.modal-footer .btn-primary,
+.modal-footer .btn-secondary {
+  border: none;
+  border-radius: 0.45rem;
+  padding: 0.55rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.table-header .btn-primary,
+.modal-footer .btn-primary {
+  background: #3f9b58;
+  color: var(--w);
+  box-shadow: 0 0.25rem 0.6rem rgba(63, 155, 88, 0.2);
+}
+
+.table-header .btn-primary:hover,
+.modal-footer .btn-primary:hover {
+  background: #318248;
+  transform: translateY(-1px);
+}
+
+.modal-footer .btn-secondary {
+  background: #d96a6a;
+  color: var(--w);
+  box-shadow: 0 0.25rem 0.6rem rgba(217, 106, 106, 0.18);
+}
+
+.modal-footer .btn-secondary:hover {
+  background: #bf5353;
+  transform: translateY(-1px);
 }
 
 .admin-table {
